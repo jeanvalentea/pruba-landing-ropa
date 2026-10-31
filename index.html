@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AURA | Colección Exclusiva de Ropa y Tendencias</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+          },
+          colors: {
+            brand: {
+              50: '#faf8f5',
+              100: '#f4ede2',
+              200: '#e8dac3',
+              500: '#b89467',
+              700: '#7e5d38',
+              900: '#1c1917',
+              dark: '#11100f',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Hoja de Estilos Personalizada (styles.css) -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-stone-50 text-stone-800 font-sans antialiased selection:bg-brand-500 selection:text-white">
+
+  <!-- BARRA SUPERIOR DE ANUNCIOS -->
+  <div class="bg-brand-900 text-stone-200 text-xs py-2 px-4 text-center font-medium tracking-wide flex items-center justify-center gap-2">
+    <span>✨ Envío gratis a nivel nacional por compras superiores a $120.000 COP</span>
+    <span class="hidden sm:inline">•</span>
+    <a href="#ofertas" class="underline hover:text-brand-200 hidden sm:inline">Aprovecha el 20% OFF en tu primera compra</a>
+  </div>
+
+  <!-- NAVEGACIÓN -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-sm transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo -->
+        <div class="flex-shrink-0 flex items-center gap-2">
+          <a href="#" class="font-serif text-3xl font-bold tracking-tight text-brand-900">
+            AURA<span class="text-brand-500 font-sans text-xl">.</span>
+          </a>
+        </div>
+
+        <!-- Menú Desktop -->
+        <nav class="hidden md:flex space-x-8 font-medium text-sm text-stone-700">
+          <a href="#inicio" class="hover:text-brand-700 transition">Inicio</a>
+          <a href="#coleccion" class="hover:text-brand-700 transition">Colección</a>
+          <a href="#categorias" class="hover:text-brand-700 transition">Categorías</a>
+          <a href="#ofertas" class="text-rose-600 font-semibold hover:text-rose-700 transition flex items-center gap-1">
+            Ofertas <span class="text-[10px] bg-rose-100 text-rose-700 px-1.5 py-0.5 rounded-full font-bold">HOT</span>
+          </a>
+          <a href="#nosotros" class="hover:text-brand-700 transition">Nosotros</a>
+          <a href="#contacto" class="hover:text-brand-700 transition">Contacto</a>
+        </nav>
+
+        <!-- Iconos de Acción -->
+        <div class="flex items-center space-x-5">
+          <!-- Búsqueda -->
+          <button id="searchBtn" class="text-stone-600 hover:text-stone-900 transition p-2 text-lg" title="Buscar productos">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+
+          <!-- Favoritos -->
+          <button id="wishlistBtn" class="text-stone-600 hover:text-rose-600 transition p-2 text-lg relative" title="Favoritos">
+            <i class="fa-regular fa-heart"></i>
+            <span id="wishlistCount" class="absolute -top-1 -right-1 bg-rose-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+          </button>
+
+          <!-- Carrito -->
+          <button id="cartBtn" class="text-stone-800 hover:text-brand-700 transition p-2 text-lg relative flex items-center" title="Carrito de compras">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span id="cartCount" class="absolute -top-1 -right-1 bg-brand-900 text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+          </button>
+
+          <!-- Botón Menú Mobile -->
+          <button id="mobileMenuBtn" class="md:hidden text-stone-800 text-2xl focus:outline-none p-2">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Barra de Búsqueda Desplegable en Vivo -->
+    <div id="searchBarContainer" class="hidden bg-stone-100 border-t border-stone-200 py-3 px-4 sm:px-8 transition-all duration-200">
+      <div class="max-w-4xl mx-auto flex items-center gap-3">
+        <i class="fa-solid fa-magnifying-glass text-stone-400"></i>
+        <input 
+          id="searchInput" 
+          type="text" 
+          placeholder="Buscar prendas por nombre (ej. abrigo, lino, chaleco, gafas)..." 
+          class="w-full bg-transparent border-none text-stone-800 text-sm focus:outline-none placeholder-stone-400"
+        >
+        <button onclick="document.getElementById('searchBarContainer').classList.add('hidden')" class="text-stone-400 hover:text-stone-600 text-xs font-semibold px-2 py-1">
+          Cerrar
+        </button>
+      </div>
+    </div>
+
+    <!-- Menú Desplegable Mobile -->
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-stone-200 px-6 py-5 space-y-4">
+      <a href="#inicio" class="block font-medium text-stone-800 hover:text-brand-700">Inicio</a>
+      <a href="#coleccion" class="block font-medium text-stone-800 hover:text-brand-700">Colección</a>
+      <a href="#categorias" class="block font-medium text-stone-800 hover:text-brand-700">Categorías</a>
+      <a href="#ofertas" class="block font-semibold text-rose-600 hover:text-rose-700">Ofertas Especiales</a>
+      <a href="#nosotros" class="block font-medium text-stone-800 hover:text-brand-700">Nosotros</a>
+      <a href="#contacto" class="block font-medium text-stone-800 hover:text-brand-700">Contacto</a>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section id="inicio" class="relative overflow-hidden bg-stone-900 text-white min-h-[85vh] flex items-center">
+    <div class="absolute inset-0 z-0">
+      <img 
+        src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop" 
+        alt="Modelo de ropa elegante" 
+        class="w-full h-full object-cover object-center opacity-40 mix-blend-overlay"
+      >
+      <div class="absolute inset-0 bg-gradient-to-r from-stone-950 via-stone-950/70 to-transparent"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
+      <div class="max-w-2xl space-y-6">
+        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-brand-500/30 text-brand-200 border border-brand-500/40">
+          <i class="fa-solid fa-sparkles text-brand-300"></i> Temporada Primavera-Verano
+        </span>
+        
+        <h1 class="text-4xl sm:text-6xl font-serif font-bold tracking-tight leading-tight text-stone-50">
+          Viste tu esencia con elegancia atemporal.
+        </h1>
+        
+        <p class="text-stone-300 text-base sm:text-lg font-light leading-relaxed">
+          Diseños minimalistas y telas de primera calidad fabricadas responsablemente para brindarte estilo, confort y distinción en cada ocasión.
+        </p>
+
+        <div class="pt-4 flex flex-wrap gap-4">
+          <a href="#coleccion" class="px-8 py-4 rounded-xl bg-white text-stone-900 font-semibold text-sm hover:bg-brand-100 transition shadow-lg flex items-center gap-3 group">
+            Explorar Colección
+            <i class="fa-solid fa-arrow-right-long transition group-hover:translate-x-1"></i>
+          </a>
+          <a href="#categorias" class="px-8 py-4 rounded-xl bg-stone-800/80 hover:bg-stone-800 text-white font-medium text-sm border border-stone-700 transition backdrop-blur-md">
+            Ver Categorías
+          </a>
+        </div>
+
+        <!-- Métricas Rápidas -->
+        <div class="pt-8 grid grid-cols-3 gap-6 border-t border-stone-800/80 max-w-md">
+          <div>
+            <p class="text-2xl font-bold font-serif text-white">+15k</p>
+            <p class="text-xs text-stone-400">Clientes Felices</p>
+          </div>
+          <div>
+            <p class="text-2xl font-bold font-serif text-white">100%</p>
+            <p class="text-xs text-stone-400">Algodón Orgánico</p>
+          </div>
+          <div>
+            <p class="text-2xl font-bold font-serif text-white">4.9 ★</p>
+            <p class="text-xs text-stone-400">Valoración Promedio</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFICIOS / PROPUESTA DE VALOR -->
+  <section class="border-y border-stone-200 bg-white py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="flex items-center space-x-3.5">
+          <div class="w-12 h-12 rounded-xl bg-stone-100 flex items-center justify-center text-stone-800 text-xl flex-shrink-0">
+            <i class="fa-solid fa-truck-fast"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm text-stone-900">Envíos Rápidos</h4>
+            <p class="text-xs text-stone-500">2 a 4 días hábiles</p>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-3.5">
+          <div class="w-12 h-12 rounded-xl bg-stone-100 flex items-center justify-center text-stone-800 text-xl flex-shrink-0">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm text-stone-900">Pago Seguro</h4>
+            <p class="text-xs text-stone-500">Cifrado de 256 bits</p>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-3.5">
+          <div class="w-12 h-12 rounded-xl bg-stone-100 flex items-center justify-center text-stone-800 text-xl flex-shrink-0">
+            <i class="fa-solid fa-rotate-left"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm text-stone-900">Cambios Fáciles</h4>
+            <p class="text-xs text-stone-500">30 días garantizados</p>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-3.5">
+          <div class="w-12 h-12 rounded-xl bg-stone-100 flex items-center justify-center text-stone-800 text-xl flex-shrink-0">
+            <i class="fa-solid fa-leaf"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm text-stone-900">Moda Sostenible</h4>
+            <p class="text-xs text-stone-500">Materiales eco-amigables</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORÍAS DESTACADAS -->
+  <section id="categorias" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+      <div>
+        <p class="text-xs font-bold tracking-widest text-brand-700 uppercase mb-2">Descubre por estilo</p>
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-stone-900">Categorías Populares</h2>
+      </div>
+      <a href="#coleccion" class="mt-4 md:mt-0 inline-flex items-center gap-2 text-sm font-semibold text-stone-900 hover:text-brand-700 transition">
+        Ver catálogo completo <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <!-- Tarjeta 1: Mujer -->
+      <div class="group relative rounded-2xl overflow-hidden shadow-md h-96 cursor-pointer">
+        <img 
+          src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1000&auto=format&fit=crop" 
+          alt="Colección Mujer" 
+          class="w-full h-full object-cover transition duration-700 group-hover:scale-105"
+        >
+        <div class="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-6 w-full flex items-end justify-between">
+          <div>
+            <span class="text-xs text-stone-300 font-medium tracking-wide">64 Artículos</span>
+            <h3 class="text-2xl font-serif font-bold text-white mt-1">Colección Femenina</h3>
+          </div>
+          <span class="w-10 h-10 rounded-full bg-white/90 text-stone-900 flex items-center justify-center transform transition group-hover:bg-brand-500 group-hover:text-white">
+            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          </span>
+        </div>
+      </div>
+
+      <!-- Tarjeta 2: Hombre -->
+      <div class="group relative rounded-2xl overflow-hidden shadow-md h-96 cursor-pointer">
+        <img 
+          src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1000&auto=format&fit=crop" 
+          alt="Colección Hombre" 
+          class="w-full h-full object-cover transition duration-700 group-hover:scale-105"
+        >
+        <div class="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-6 w-full flex items-end justify-between">
+          <div>
+            <span class="text-xs text-stone-300 font-medium tracking-wide">48 Artículos</span>
+            <h3 class="text-2xl font-serif font-bold text-white mt-1">Línea Masculina</h3>
+          </div>
+          <span class="w-10 h-10 rounded-full bg-white/90 text-stone-900 flex items-center justify-center transform transition group-hover:bg-brand-500 group-hover:text-white">
+            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          </span>
+        </div>
+      </div>
+
+      <!-- Tarjeta 3: Accesorios -->
+      <div class="group relative rounded-2xl overflow-hidden shadow-md h-96 cursor-pointer sm:col-span-2 lg:col-span-1">
+        <img 
+          src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=1000&auto=format&fit=crop" 
+          alt="Accesorios y Calzado" 
+          class="w-full h-full object-cover transition duration-700 group-hover:scale-105"
+        >
+        <div class="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-6 w-full flex items-end justify-between">
+          <div>
+            <span class="text-xs text-stone-300 font-medium tracking-wide">32 Artículos</span>
+            <h3 class="text-2xl font-serif font-bold text-white mt-1">Accesorios & Bolsos</h3>
+          </div>
+          <span class="w-10 h-10 rounded-full bg-white/90 text-stone-900 flex items-center justify-center transform transition group-hover:bg-brand-500 group-hover:text-white">
+            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE PRODUCTOS DESTACADOS (COLECCIÓN) -->
+  <section id="coleccion" class="py-16 bg-white border-t border-stone-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <p class="text-xs font-bold tracking-widest text-brand-700 uppercase mb-2">Lo Más Deseado</p>
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-stone-900">Prendas en Tendencia</h2>
+        <p class="text-stone-500 text-sm mt-3">Prendas seleccionadas a mano diseñadas para adaptarse a cualquier momento de tu día a día.</p>
+      </div>
+
+      <!-- Filtros de Categoría -->
+      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-12">
+        <button class="filter-btn active px-5 py-2 rounded-full text-xs font-semibold bg-stone-900 text-white transition cursor-pointer" data-filter="all">Todos</button>
+        <button class="filter-btn px-5 py-2 rounded-full text-xs font-semibold bg-stone-100 text-stone-600 hover:bg-stone-200 transition cursor-pointer" data-filter="mujer">Mujer</button>
+        <button class="filter-btn px-5 py-2 rounded-full text-xs font-semibold bg-stone-100 text-stone-600 hover:bg-stone-200 transition cursor-pointer" data-filter="hombre">Hombre</button>
+        <button class="filter-btn px-5 py-2 rounded-full text-xs font-semibold bg-stone-100 text-stone-600 hover:bg-stone-200 transition cursor-pointer" data-filter="accesorios">Accesorios</button>
+      </div>
+
+      <!-- Parrilla de Productos -->
+      <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+        <!-- Producto 1 -->
+        <div class="product-card group" data-category="mujer" data-id="1" data-name="Abrigo Oversize Camel" data-price="289000">
+          <div class="relative bg-stone-100 rounded-2xl overflow-hidden aspect-[3/4] mb-4">
+            <img 
+              src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=800&auto=format&fit=crop" 
+              alt="Abrigo Oversize Camel" 
+              class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+            >
+            <span class="absolute top-3 left-3 bg-white text-stone-900 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md shadow-sm">Nuevo</span>
+            <button class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-stone-600 hover:text-rose-500 flex items-center justify-center transition shadow-sm">
+              <i class="fa-regular fa-heart"></i>
+            </button>
+            <button class="add-to-cart-btn absolute bottom-3 left-3 right-3 bg-stone-900/95 hover:bg-brand-900 text-white py-3 rounded-xl text-xs font-semibold transition opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 duration-300 flex items-center justify-center gap-2">
+              <i class="fa-solid fa-plus text-[10px]"></i> Añadir al Carrito
+            </button>
+          </div>
+          <div>
+            <div class="flex items-center justify-between text-xs text-stone-400 mb-1">
+              <span>Mujer</span>
+              <span class="text-amber-500 font-semibold"><i class="fa-solid fa-star text-[10px]"></i> 4.9</span>
+            </div>
+            <h3 class="font-semibold text-stone-800 text-base group-hover:text-brand-700 transition">Abrigo Oversize Camel</h3>
+            <p class="font-bold text-stone-900 mt-1">$289.000 <span class="text-xs text-stone-400 line-through font-normal ml-1">$340.000</span></p>
+          </div>
+        </div>
+
+        <!-- Producto 2 -->
+        <div class="product-card group" data-category="hombre" data-id="2" data-name="Chaqueta Minimalist Denim" data-price="210000">
+          <div class="relative bg-stone-100 rounded-2xl overflow-hidden aspect-[3/4] mb-4">
+            <img 
+              src="https://images.unsplash.com/photo-1516257984-b1b4d707412e?q=80&w=800&auto=format&fit=crop" 
+              alt="Chaqueta Denim" 
+              class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+            >
+            <span class="absolute top-3 left-3 bg-rose-600 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md shadow-sm">-20%</span>
+            <button class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-stone-600 hover:text-rose-500 flex items-center justify-center transition shadow-sm">
+              <i class="fa-regular fa-heart"></i>
+            </button>
+            <button class="add-to-cart-btn absolute bottom-3 left-3 right-3 bg-stone-900/95 hover:bg-brand-900 text-white py-3 rounded-xl text-xs font-semibold transition opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 duration-300 flex items-center justify-center gap-2">
+              <i class="fa-solid fa-plus text-[10px]"></i> Añadir al Carrito
+            </button>
+          </div>
+          <div>
+            <div class="flex items-center justify-between text-xs text-stone-400 mb-1">
+              <span>Hombre</span>
+              <span class="text-amber-500 font-semibold"><i class="fa-solid fa-star text-[10px]"></i> 4.8</span>
+            </div>
+            <h3 class="font-semibold text-stone-800 text-base group-hover:text-brand-700 transition">Chaqueta Minimalist Denim</h3>
+            <p class="font-bold text-stone-900 mt-1">$210.000 <span class="text-xs text-stone-400 line-through font-normal ml-1">$260.000</span></p>
+          </div>
+        </div>
+
+        <!-- Producto 3 -->
+        <div class="product-card group" data-category="mujer" data-id="3" data-name="Vestido de Lino Natural" data-price="195000">
+          <div class="relative bg-stone-100 rounded-2xl overflow-hidden aspect-[3/4] mb-4">
+            <img 
+              src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=800&auto=format&fit=crop" 
+              alt="Vestido Lino Natural" 
+              class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+            >
+            <button class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-stone-600 hover:text-rose-500 flex items-center justify-center transition shadow-sm">
+              <i class="fa-regular fa-heart"></i>
+            </button>
+            <button class="add-to-cart-btn absolute bottom-3 left-3 right-3 bg-stone-900/95 hover:bg-brand-900 text-white py-3 rounded-xl text-xs font-semibold transition opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 duration-300 flex items-center justify-center gap-2">
+              <i class="fa-solid fa-plus text-[10px]"></i> Añadir al Carrito
+            </button>
+          </div>
+          <div>
+            <div class="flex items-center justify-between text-xs text-stone-400 mb-1">
+              <span>Mujer</span>
+              <span class="text-amber-500 font-semibold"><i class="fa-solid fa-star text-[10px]"></i> 5.0</span>
+            </div>
+            <h3 class="font-semibold text-stone-800 text-base group-hover:text-brand-700 transition">Vestido de Lino Natural</h3>
+            <p class="font-bold text-stone-900 mt-1">$195.000</p>
+          </div>
+        </div>
+
+        <!-- Producto 4 -->
+        <div class="product-card group" data-category="accesorios" data-id="4" data-name="Bolso Tote en Cuero Vegano" data-price="165000">
+          <div class="relative bg-stone-100 rounded-2xl overflow-hidden aspect-[3/4] mb-4">
+            <img 
+              src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=800&auto=format&fit=crop" 
+              alt="Bolso Cuero Vegano" 
+              class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+            >
+            <span class="absolute top-3 left-3 bg-brand-700 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md shadow-sm">Best Seller</span>
+            <button class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-stone-600 hover:text-rose-500 flex items-center justify-center transition shadow-sm">
+              <i class="fa-regular fa-heart"></i>
+            </button>
+            <button class="add-to-cart-btn absolute bottom-3 left-3 right-3 bg-stone-900/95 hover:bg-brand-900 text-white py-3 rounded-xl text-xs font-semibold transition opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 duration-300 flex items-center justify-center gap-2">
+              <i class="fa-solid fa-plus text-[10px]"></i> Añadir al Carrito
+            </button>
+          </div>
+          <div>
+            <div class="flex items-center justify-between text-xs text-stone-400 mb-1">
+              <span>Accesorios</span>
+              <span class="text-amber-500 font-semibold"><i class="fa-solid fa-star text-[10px]"></i> 4.9</span>
+            </div>
+            <h3 class="font-semibold text-stone-800 text-base group-hover:text-brand-700 transition">Bolso Tote Cuero Vegano</h3>
+            <p class="font-bold text-stone-900 mt-1">$165.000</p>
+          </div>
+        </div>
+
+        <!-- Producto 5 -->
+        <div class="product-card group" data-category="hombre" data-id="5" data-name="Buzo Cuello Tortuga Algodón" data-price="145000">
+          <div class="relative bg-stone-100 rounded-2xl overflow-hidden aspect-[3/4] mb-4">
+            <img 
+              src="https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?q=80&w=800&auto=format&fit=crop" 
+              alt="Buzo de cuello alto" 
+              class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+            >
+            <button class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-stone-600 hover:text-rose-500 flex items-center justify-center transition shadow-sm">
+              <i class="fa-regular fa-heart"></i>
+            </button>
+            <button class="add-to-cart-btn absolute bottom-3 left-3 right-3 bg-stone-900/95 hover:bg-brand-900 text-white py-3 rounded-xl text-xs font-semibold transition opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 duration-300 flex items-center justify-center gap-2">
+              <i class="fa-solid fa-plus text-[10px]"></i> Añadir al Carrito
+            </button>
+          </div>
+          <div>
+            <div class="flex items-center justify-between text-xs text-stone-400 mb-1">
+              <span>Hombre</span>
+              <span class="text-amber-500 font-semibold"><i class="fa-solid fa-star text-[10px]"></i> 4.7</span>
+            </div>
+            <h3 class="font-semibold text-stone-800 text-base group-hover:text-brand-700 transition">Buzo Cuello Tortuga Algodón</h3>
+            <p class="font-bold text-stone-900 mt-1">$145.000</p>
+          </div>
+        </div>
+
+        <!-- Producto 6 -->
+        <div class="product-card group" data-category="mujer" data-id="6" data-name="Blazer Sastrería Crema" data-price="275000">
+          <div class="relative bg-stone-100 rounded-2xl overflow-hidden aspect-[3/4] mb-4">
+            <img 
+              src="https://images.unsplash.com/photo-1584273143981-41c073dfe8f8?q=80&w=800&auto=format&fit=crop" 
+              alt="Blazer crema" 
+              class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+            >
+            <button class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-stone-600 hover:text-rose-500 flex items-center justify-center transition shadow-sm">
+              <i class="fa-regular fa-heart"></i>
+            </button>
+            <button class="add-to-cart-btn absolute bottom-3 left-3 right-3 bg-stone-900/95 hover:bg-brand-900 text-white py-3 rounded-xl text-xs font-semibold transition opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 duration-300 flex items-center justify-center gap-2">
+              <i class="fa-solid fa-plus text-[10px]"></i> Añadir al Carrito
+            </button>
+          </div>
+          <div>
+            <div class="flex items-center justify-between text-xs text-stone-400 mb-1">
+              <span>Mujer</span>
+              <span class="text-amber-500 font-semibold"><i class="fa-solid fa-star text-[10px]"></i> 4.9</span>
+            </div>
+            <h3 class="font-semibold text-stone-800 text-base group-hover:text-brand-700 transition">Blazer Sastrería Crema</h3>
+            <p class="font-bold text-stone-900 mt-1">$275.000</p>
+          </div>
+        </div>
+
+        <!-- Producto 7 -->
+        <div class="product-card group" data-category="hombre" data-id="7" data-name="Pantalón Chino Slim Fit" data-price="159000">
+          <div class="relative bg-stone-100 rounded-2xl overflow-hidden aspect-[3/4] mb-4">
+            <img 
+              src="https://images.unsplash.com/photo-1479064555552-3ef4979f8908?q=80&w=800&auto=format&fit=crop" 
+              alt="Pantalón Casual" 
+              class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+            >
+            <button class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-stone-600 hover:text-rose-500 flex items-center justify-center transition shadow-sm">
+              <i class="fa-regular fa-heart"></i>
+            </button>
+            <button class="add-to-cart-btn absolute bottom-3 left-3 right-3 bg-stone-900/95 hover:bg-brand-900 text-white py-3 rounded-xl text-xs font-semibold transition opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 duration-300 flex items-center justify-center gap-2">
+              <i class="fa-solid fa-plus text-[10px]"></i> Añadir al Carrito
+            </button>
+          </div>
+          <div>
+            <div class="flex items-center justify-between text-xs text-stone-400 mb-1">
+              <span>Hombre</span>
+              <span class="text-amber-500 font-semibold"><i class="fa-solid fa-star text-[10px]"></i> 4.6</span>
+            </div>
+            <h3 class="font-semibold text-stone-800 text-base group-hover:text-brand-700 transition">Pantalón Chino Slim Fit</h3>
+            <p class="font-bold text-stone-900 mt-1">$159.000</p>
+          </div>
+        </div>
+
+        <!-- Producto 8 -->
+        <div class="product-card group" data-category="accesorios" data-id="8" data-name="Gafas de Sol Estilo Retro" data-price="89000">
+          <div class="relative bg-stone-100 rounded-2xl overflow-hidden aspect-[3/4] mb-4">
+            <img 
+              src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?q=80&w=800&auto=format&fit=crop" 
+              alt="Gafas de Sol Retro" 
+              class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+            >
+            <span class="absolute top-3 left-3 bg-amber-600 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md shadow-sm">Tendencia</span>
+            <button class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/80 hover:bg-white text-stone-600 hover:text-rose-500 flex items-center justify-center transition shadow-sm">
+              <i class="fa-regular fa-heart"></i>
+            </button>
+            <button class="add-to-cart-btn absolute bottom-3 left-3 right-3 bg-stone-900/95 hover:bg-brand-900 text-white py-3 rounded-xl text-xs font-semibold transition opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 duration-300 flex items-center justify-center gap-2">
+              <i class="fa-solid fa-plus text-[10px]"></i> Añadir al Carrito
+            </button>
+          </div>
+          <div>
+            <div class="flex items-center justify-between text-xs text-stone-400 mb-1">
+              <span>Accesorios</span>
+              <span class="text-amber-500 font-semibold"><i class="fa-solid fa-star text-[10px]"></i> 4.8</span>
+            </div>
+            <h3 class="font-semibold text-stone-800 text-base group-hover:text-brand-700 transition">Gafas de Sol Retro Amber</h3>
+            <p class="font-bold text-stone-900 mt-1">$89.000</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BANNER PROMOCIONAL / OFERTA ESPECIAL -->
+  <section id="ofertas" class="py-16 bg-stone-100 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="relative bg-gradient-to-r from-stone-900 via-stone-800 to-brand-900 rounded-3xl p-8 sm:p-12 lg:p-16 text-white shadow-2xl overflow-hidden">
+        
+        <!-- Elemento de fondo decorativo -->
+        <div class="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-brand-500/20 blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-xl">
+          <span class="px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-rose-500/20 text-rose-300 border border-rose-500/30">
+            Oferta por Tiempo Limitado
+          </span>
+          <h2 class="text-3xl sm:text-5xl font-serif font-bold mt-4 leading-tight">
+            20% de Descuento Extra con el código <span class="text-brand-200">AURA20</span>
+          </h2>
+          <p class="text-stone-300 text-sm sm:text-base mt-4 leading-relaxed">
+            Renueva tu armario de temporada con nuestras piezas exclusivas. Válido en compras directas desde nuestra tienda virtual.
+          </p>
+
+          <div class="mt-8 flex flex-wrap items-center gap-4">
+            <a href="#coleccion" class="px-8 py-3.5 rounded-xl bg-white text-stone-900 font-semibold text-sm hover:bg-brand-100 transition shadow">
+              Comprar Ahora con Descuento
+            </a>
+            <span class="text-xs text-stone-400">Términos y condiciones aplican.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <p class="text-xs font-bold tracking-widest text-brand-700 uppercase mb-2">Comunidad AURA</p>
+        <h2 class="text-3xl font-serif font-bold text-stone-900">Lo que dicen nuestros clientes</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <div class="bg-stone-50 p-8 rounded-2xl border border-stone-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex text-amber-500 text-sm mb-4">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-stone-600 text-sm italic leading-relaxed">
+              "La calidad del lino y los acabados del abrigo superaron mis expectativas. Llegó en 2 días a Medellín impecablemente empacado."
+            </p>
+          </div>
+          <div class="mt-6 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-brand-200 flex items-center justify-center font-bold text-brand-900 text-sm">
+              CL
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-stone-900">Camila Londoño</p>
+              <p class="text-xs text-stone-400">Cliente Verificada</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-stone-50 p-8 rounded-2xl border border-stone-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex text-amber-500 text-sm mb-4">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-stone-600 text-sm italic leading-relaxed">
+              "El corte de la chaqueta es moderno y ajusta perfecto. Es difícil encontrar ropa con este nivel de confección a un precio justo."
+            </p>
+          </div>
+          <div class="mt-6 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-brand-200 flex items-center justify-center font-bold text-brand-900 text-sm">
+              MR
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-stone-900">Mateo Rodríguez</p>
+              <p class="text-xs text-stone-400">Cliente Verificado</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-stone-50 p-8 rounded-2xl border border-stone-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex text-amber-500 text-sm mb-4">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-stone-600 text-sm italic leading-relaxed">
+              "El bolso es hermoso y el cuero vegano tiene una textura suave y resistente. La atención por WhatsApp fue muy amable."
+            </p>
+          </div>
+          <div class="mt-6 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-brand-200 flex items-center justify-center font-bold text-brand-900 text-sm">
+              VG
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-stone-900">Valeria Gómez</p>
+              <p class="text-xs text-stone-400">Cliente Verificada</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="py-16 bg-stone-900 text-white">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <span class="text-brand-500 text-2xl font-serif">Únete al Club</span>
+      <h2 class="text-3xl sm:text-4xl font-serif font-bold mt-2">Recibe lanzamientos y descuentos secretos</h2>
+      <p class="text-stone-400 text-sm mt-3 max-w-md mx-auto">
+        Suscríbete a nuestro boletín para acceder a ventas privadas y un 10% adicional en tu próximo pedido.
+      </p>
+      
+      <form id="newsletterForm" class="mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        <input 
+          type="email" 
+          placeholder="Tu correo electrónico..." 
+          required 
+          class="flex-1 px-5 py-3.5 rounded-xl bg-stone-800 border border-stone-700 text-white placeholder-stone-400 text-sm focus:outline-none focus:border-brand-500"
+        >
+        <button type="submit" class="px-6 py-3.5 bg-brand-500 hover:bg-brand-700 text-white rounded-xl font-semibold text-sm transition">
+          Suscribirme
+        </button>
+      </form>
+      <p id="newsletterMsg" class="text-emerald-400 text-xs mt-3 hidden">¡Gracias por suscribirte! Te hemos enviado tu cupón al correo.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="nosotros" class="bg-stone-950 text-stone-400 text-sm border-t border-stone-800 pt-16 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+        
+        <!-- Acerca de -->
+        <div class="space-y-4">
+          <a href="#" class="font-serif text-3xl font-bold tracking-tight text-white block">
+            AURA<span class="text-brand-500 font-sans text-xl">.</span>
+          </a>
+          <p class="text-xs text-stone-400 leading-relaxed">
+            Redefiniendo el guardarropa contemporáneo con un enfoque de sostenibilidad, elegancia y atención al mínimo detalle.
+          </p>
+          <div class="flex space-x-4 pt-2">
+            <a href="#" class="w-9 h-9 rounded-full bg-stone-900 hover:bg-stone-800 text-stone-300 hover:text-white flex items-center justify-center transition">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-full bg-stone-900 hover:bg-stone-800 text-stone-300 hover:text-white flex items-center justify-center transition">
+              <i class="fa-brands fa-tiktok"></i>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-full bg-stone-900 hover:bg-stone-800 text-stone-300 hover:text-white flex items-center justify-center transition">
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-full bg-stone-900 hover:bg-stone-800 text-stone-300 hover:text-white flex items-center justify-center transition">
+              <i class="fa-brands fa-pinterest-p"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Enlaces Rápidos -->
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-4 tracking-wide uppercase">Comprar</h4>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="#coleccion" class="hover:text-white transition">Nuevas Llegadas</a></li>
+            <li><a href="#coleccion" class="hover:text-white transition">Mujer</a></li>
+            <li><a href="#coleccion" class="hover:text-white transition">Hombre</a></li>
+            <li><a href="#coleccion" class="hover:text-white transition">Accesorios</a></li>
+            <li><a href="#ofertas" class="hover:text-white transition">Liquidación y Rebajas</a></li>
+          </ul>
+        </div>
+
+        <!-- Servicio al Cliente -->
+        <div id="contacto">
+          <h4 class="text-white font-semibold text-sm mb-4 tracking-wide uppercase">Atención al Cliente</h4>
+          <ul class="space-y-2.5 text-xs">
+            <li><a href="#" class="hover:text-white transition">Rastreo de Pedido</a></li>
+            <li><a href="#" class="hover:text-white transition">Guía de Tallas</a></li>
+            <li><a href="#" class="hover:text-white transition">Políticas de Devolución</a></li>
+            <li><a href="#" class="hover:text-white transition">Preguntas Frecuentes</a></li>
+            <li><a href="https://wa.me/" target="_blank" class="hover:text-white transition flex items-center gap-1.5 text-emerald-400 font-medium">
+              <i class="fa-brands fa-whatsapp"></i> Chat de WhatsApp
+            </a></li>
+          </ul>
+        </div>
+
+        <!-- Legal y Contacto -->
+        <div>
+          <h4 class="text-white font-semibold text-sm mb-4 tracking-wide uppercase">Contacto</h4>
+          <p class="text-xs text-stone-400 leading-relaxed">
+            Calle 10 # 43E - 20, El Poblado<br>
+            Medellín, Colombia<br><br>
+            <strong>Email:</strong> contacto@auramoda.com<br>
+            <strong>Horario:</strong> Lun - Sáb: 9:00 AM - 7:00 PM
+          </p>
+        </div>
+
+      </div>
+
+      <div class="border-t border-stone-800 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-stone-500 gap-4">
+        <p>© 2026 AURA Clothing Co. Todos los derechos reservados.</p>
+        <div class="flex gap-4">
+          <a href="#" class="hover:text-stone-400">Privacidad</a>
+          <a href="#" class="hover:text-stone-400">Términos de servicio</a>
+          <a href="#" class="hover:text-stone-400">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL / CARRITO LATERAL (DRAWER) -->
+  <div id="cartDrawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+    <!-- Backdrop -->
+    <div id="cartBackdrop" class="absolute inset-0 bg-stone-900/60 backdrop-blur-sm transition-opacity opacity-0"></div>
+    
+    <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+      <div id="cartPanel" class="w-screen max-w-md bg-white shadow-2xl flex flex-col transform translate-x-full transition duration-300">
+        
+        <!-- Header Carrito -->
+        <div class="p-6 border-b border-stone-200 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <h3 class="font-serif text-xl font-bold text-stone-900">Bolsa de Compras</h3>
+            <span id="drawerCount" class="text-xs bg-stone-100 text-stone-700 px-2 py-0.5 rounded-full font-semibold">0</span>
+          </div>
+          <button id="closeCartBtn" class="text-stone-400 hover:text-stone-700 p-2 text-lg">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <!-- Lista de Productos -->
+        <div id="cartItemsList" class="flex-1 overflow-y-auto p-6 space-y-4">
+          <!-- Se llena dinámicamente -->
+          <div id="emptyCartMsg" class="h-full flex flex-col items-center justify-center text-center text-stone-400 py-12">
+            <i class="fa-solid fa-bag-shopping text-5xl mb-4 text-stone-300"></i>
+            <p class="font-medium text-stone-600">Tu bolsa está vacía</p>
+            <p class="text-xs mt-1">Explora nuestra colección y añade tus prendas favoritas.</p>
+          </div>
+        </div>
+
+        <!-- Footer Carrito -->
+        <div id="cartFooter" class="p-6 border-t border-stone-200 bg-stone-50 hidden space-y-4">
+          <div class="flex items-center justify-between text-sm">
+            <span class="text-stone-500">Subtotal:</span>
+            <span id="cartSubtotal" class="font-bold text-stone-900 text-lg">$0</span>
+          </div>
+          <p class="text-[11px] text-stone-400">Impuestos y gastos de envío calculados al finalizar la compra.</p>
+          <button id="checkoutBtn" class="w-full py-4 rounded-xl bg-stone-900 hover:bg-brand-900 text-white font-semibold text-sm transition shadow-md flex items-center justify-center gap-2">
+            <i class="fa-solid fa-lock text-xs"></i> Finalizar Pedido
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICACIÓN -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-stone-900 text-white px-5 py-3 rounded-xl shadow-xl flex items-center gap-3 transform translate-y-24 opacity-0 transition duration-300 pointer-events-none">
+    <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+    <span id="toastMsg" class="text-xs font-medium">Producto añadido a tu bolsa</span>
+  </div>
+
+  <!-- ARCHIVO JAVASCRIPT EXTERNO -->
+  <script src="app.js"></script>
+</body>
+</html>
